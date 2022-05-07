@@ -310,7 +310,7 @@ namespace OS_Project
                 Console.WriteLine("Please use valid Command ^__^ ");
             }
         }
-    
+
         static void Command3Arg(string[] CommandArray3Arg)
         {
             if (CommandArray3Arg[0].ToLower() == "rename")
@@ -373,6 +373,8 @@ namespace OS_Project
 
             else if (CommandArray3Arg[0] == "copy")
             {
+                cd_copy(CommandArray3Arg[2]);
+                import_copy(CommandArray3Arg[1]);
                 int index = Program.Currentdirectory.Search(CommandArray3Arg[1].ToString());
                 if (index != -1)
                 {
@@ -413,8 +415,50 @@ namespace OS_Project
                 Console.WriteLine(CommandArray3Arg[0] + " It's not a valid command.");
                 Console.WriteLine("Please use valid Command ^__^ ");
             }
+            void cd_copy(string name_of_Dir)
+            {
+                int index = Program.Currentdirectory.Search(name_of_Dir.ToString());//بسيرش علي الدايريكتوري الي انا عايز اروحله 
+
+                if (index != -1)
+                {
+                    byte attribute = Program.Currentdirectory.directoryTable[index].fileAttribute;
+                    if (attribute == 16)
+                    {
+                        int FirstCluster = Program.Currentdirectory.directoryTable[index].firstCluster; //علشان اشوف الفولدر موجود ولا
+                        directory dir = new directory(name_of_Dir.ToCharArray(), 1, FirstCluster, 0, Program.Currentdirectory);//بديلة معلومات الي الدايريكتوري الي عايز اروحله
+                        Program.Currentdirectory = dir;  //هنا خليته يشاور ع الدايريكتوري الي عايز اروحله
+                        Program.path = Program.path + "\\" + name_of_Dir.ToString();   //غيرت الباس
+                        Program.Currentdirectory.Readdirectory();
+                    }
+                }
+
+            }
+
+            void import_copy(string path)
+            {
+                if (File.Exists(path))
+                {
+                    string name_txt = Path.GetFileName(path);
+                    string content_txt = File.ReadAllText(path);
+                    int size_txt = content_txt.Length;
+                    int index = Program.Currentdirectory.Search(name_txt);
+                    if (index == -1)
+                    {
+                        if (size_txt > 0)
+                        {
+                            Program.Currentdirectory.firstCluster = FatTable.getAvailableBlock();
+                        }
+                        else { }
+                        FileEntryClass d = new FileEntryClass(name_txt.ToCharArray(), 0x01, 0, size_txt, Program.Currentdirectory, content_txt);
+                        d.WriteFileContent();
+                        directoryEntry d1 = new directoryEntry(name_txt.ToCharArray(), 0x01, 0, size_txt);
+                        Program.Currentdirectory.directoryTable.Add(d1);
+                        Program.Currentdirectory.Write_directory();
+                    }
+
+                }
+            }
 
         }
-
     }
 }

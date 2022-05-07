@@ -124,9 +124,9 @@ namespace OS_Project
         }
         static public int get_free_spaces()
         {
-            int co = getAvailableBlocks();
+            int co = getAvailableBlocks()*1024;
 
-            return co * 1024;
+            return co;
         }
 
     }

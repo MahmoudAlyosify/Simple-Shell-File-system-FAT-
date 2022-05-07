@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "i+VyS/iuvzL8gXm6dU9F6AHOOriy/+UaJk2CdrAOLga8t/8h3P8SYaWAEACfnd2JcptVPcvRUBLHZacvv/yjsg==",
+  "dgSpecHash": "x7x49up/RzoA7Af3yUKaOC3pQ619r37+QhbYM9uuXq74RWFO7Ds+k9tV8om/f1fzuqr0EqbSuhU0PQ3goJfUFA==",
   "success": true,
   "projectFilePath": "E:\\OS Project\\OS Project\\OS Project\\OS Project.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Electronica Care\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.22\\microsoft.netcore.app.host.win-x64.3.1.22.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
