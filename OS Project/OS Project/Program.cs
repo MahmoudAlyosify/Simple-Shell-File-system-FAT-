@@ -3,22 +3,28 @@ using System.Text;
 
 namespace OS_Project
 {
-    class Program
+    public static class Program
     {
-        public static directory Currentdirectory;
-        public static string path = "";
+        public static Directory CurrentDirectory;
 
-        static void Main(string[] args)
-        { 
+        public static string Path = "";
+
+        public static void Main(string[] args)
+        {
             Console.WriteLine("Microsoft Windows [Version 10.0.22000.613]");
-            Console.WriteLine("(c) Microsoft Corporation. All rights reserved.\n");
+            Console.WriteLine("(c) Microsoft Corporation. All rights reserved.");
+            Console.WriteLine();
+            Console.WriteLine();
+
             VirtualDisk.Intialize();
-            Currentdirectory = VirtualDisk.Root;
-            string path2 = new string(Currentdirectory.FileName);
-            path = path2;
+         
+            CurrentDirectory = VirtualDisk.Root;
+            string s = new string(CurrentDirectory.FileName);
+            Path = s;
+
             while (true)
             {
-                Console.Write(path);
+                Console.Write(Path);
                 Console.Write(">");
                 string Commmand = Console.ReadLine();
                 Commands com = new Commands(Commmand);

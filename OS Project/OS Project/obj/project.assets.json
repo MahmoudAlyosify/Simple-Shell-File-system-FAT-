@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\OS Project\\OS Project\\OS Project\\OS Project.csproj",
+      "projectUniqueName": "D:\\Lastone 5-7-2022\\OS Project\\OS Project\\OS Project.csproj",
       "projectName": "OS Project",
-      "projectPath": "E:\\OS Project\\OS Project\\OS Project\\OS Project.csproj",
+      "projectPath": "D:\\Lastone 5-7-2022\\OS Project\\OS Project\\OS Project.csproj",
       "packagesPath": "C:\\Users\\Electronica Care\\.nuget\\packages\\",
-      "outputPath": "E:\\OS Project\\OS Project\\OS Project\\obj\\",
+      "outputPath": "D:\\Lastone 5-7-2022\\OS Project\\OS Project\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

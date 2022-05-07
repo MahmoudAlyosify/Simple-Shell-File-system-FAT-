@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Linq;
+using System.Text;
+
 namespace OS_Project
 {
     public class Commands
     {
-
-        public static List<string> Date = new List<string>();
-        public static Boolean isused, import_isused;
         public string[] CommandArg;
         public Commands(string command)
         {
@@ -17,448 +14,486 @@ namespace OS_Project
 
             if (CommandArg.Length == 1)
             {
+
                 Command(CommandArg);
             }
-            else if (CommandArg.Length == 2)
+            else if (CommandArg.Length > 1)
             {
                 Command2Arg(CommandArg);
             }
-            else if (CommandArg.Length == 3)
-            {
-                Command3Arg(CommandArg);
-            }
+
         }
         static void Command(string[] CommandArray)
         {
-            DateTime aDate = DateTime.Now;
-            string[] fileEntries = Directory.GetFiles(@"E:\");
-            List<string> fileImport = new List<string>();
             if (CommandArray[0].ToLower() == "quit")
             {
                 Environment.Exit(0);
             }
+
             else if (CommandArray[0].ToLower() == "cls")
             {
                 Console.Clear();
             }
-            else if (CommandArray[0].ToLower() == "dir")//dir - List the contents of directory
-            {
 
-                int count_num_files = 0;
-                int count_num_Directory = 0;
-                int size_of_each_file = 0;
-                for (int i = 0; i < Program.Currentdirectory.directoryTable.Count; i++)
-                {
-                    if (Program.Currentdirectory.directoryTable[i].fileAttribute == 1)
-                    {
-
-                        Console.WriteLine("         " + Program.Currentdirectory.directoryTable[i].fileSize + "  " + new string(Program.Currentdirectory.directoryTable[i].FileName));
-
-                        count_num_files++;
-                        size_of_each_file += Program.Currentdirectory.directoryTable[i].fileSize;
-                    }
-                    else if (Program.Currentdirectory.directoryTable[i].fileAttribute == 16)
-                    {
-                        Console.WriteLine("         <DIR>    " + "  " + new string(Program.Currentdirectory.directoryTable[i].FileName));
-                        count_num_Directory++;
-                    }
-                }
-                Console.WriteLine("                     " + count_num_files + "  File(s)     " + size_of_each_file);
-                Console.WriteLine("                     " + count_num_Directory + "  DIR(s)      " + FatTable.get_free_spaces() + "  bytes free");
-
-            }
             else if (CommandArray[0].ToLower() == "help")
             {
-                Console.WriteLine(" -cd       Change the current default directory to another.");
-                Console.WriteLine(" -cls      Clear the screen.");
-                Console.WriteLine(" -dir      List the contents of directory.");
-                Console.WriteLine(" -help     Display the user manual using the more filter.");
-                Console.WriteLine(" -quit     Quit the shell.");
-                Console.WriteLine(" -copy     Copies one or more files to another location.");
-                Console.WriteLine(" -del      Deletes one or more files.");
-                Console.WriteLine(" -md       Creates a directory.");
-                Console.WriteLine(" -rd       Removes a directory.");
-                Console.WriteLine(" -rename   Renames a file.");
-                Console.WriteLine(" -type     Displays the contents of a text file.");
-                Console.WriteLine(" -import   import text file(s) from your computer.");
-                Console.WriteLine(" -export   export text file(s) to your computer.");
-
+                Console.WriteLine("-cd       Change the current default directory to another.");
+                Console.WriteLine("-cls      Clear the screen.");
+                Console.WriteLine("-dir      List the contents of directory.");
+                Console.WriteLine("-help     Display the user manual using the more filter.");
+                Console.WriteLine("-quit     Quit the shell.");
+                Console.WriteLine("-copy     Copies one or more files to another location.");
+                Console.WriteLine("-del      Deletes one or more files.");
+                Console.WriteLine("-md       Creates a directory.");
+                Console.WriteLine("-rd       Removes a directory.");
+                Console.WriteLine("-rename   Renames a file.");
+                Console.WriteLine("-type     Displays the contents of a text file.");
+                Console.WriteLine("-import   import text file(s) from your computer.");
+                Console.WriteLine("-export   export text file(s) to your computer.");
             }
 
+            else if (CommandArray[0].ToLower() == "dir")
+            {
+                int FileCounter = 0;
+                int FolderCounter = 0;
+                int FileSizes = 0;
+                for (int i = 0; i < Program.CurrentDirectory.DirectoryTable.Count; i++)
+                {
+                    if (Program.CurrentDirectory.DirectoryTable[i].fileAttribute == 1)  //ده لو هو فولدر
+                    {
+                        FolderCounter++;
+                        string s = new string(Program.CurrentDirectory.DirectoryTable[i].FileName);
+                        Console.WriteLine(" <Dir>   " + s);
+                    }
+                    else  if (Program.CurrentDirectory.DirectoryTable[i].fileAttribute==2)
+                    {
+                        FileCounter++;
+                        FileSizes += Program.CurrentDirectory.DirectoryTable[i].fileSize;
+                        string m = "";
+                        m += new string(Program.CurrentDirectory.DirectoryTable[i].FileName);
+                        Console.Write(" <File> ");
+                        Console.Write( " " + m);
+                        Console.WriteLine();
+                        //break;
+                    }
+                }
+                
+                Console.Write(FileCounter + " File(s)     ");
+                if (FileCounter > 0)
+                {
+                    Console.Write(FileSizes);
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
+                Console.WriteLine(FolderCounter + " Folder(s)     " + FatTable.FreeSpaces());
+            }
 
             else
             {
-                Console.WriteLine("\'" + CommandArray[0] + "\'" + " is not recognized as an internal or external command,operable program or batch file.");
+                Console.WriteLine(CommandArray[0] + " is not a valid command.");
+                Console.WriteLine("please valid Command ");
             }
-
         }
         static void Command2Arg(string[] CommandArray2Arg)
         {
-
-
             if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "cd")
             {
-                Console.WriteLine("cd   Change the current default directory to. If the argument is not present, report the current directory. If the directory does not exist an appropriate error should be reported.");
+                Console.WriteLine("-cd   Change the current default directory to. If the argument is not present, report the current directory. If the directory does not exist an appropriate error should be reported.");
             }
+
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "cls")
             {
-                Console.WriteLine("cls   Clear the screen.");
+                Console.WriteLine("-cls   Clear the screen.");
             }
+
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "dir")
             {
-                Console.WriteLine("dir   List the contents of directory.");
+                Console.WriteLine("-dir   List the contents of directory.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "help")
             {
-                Console.WriteLine("help   Display the user manual using the more filter.");
+                Console.WriteLine("-help   Display the user manual using the more filter.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "quit")
             {
-                Console.WriteLine("quit   Quit the shell.");
+                Console.WriteLine("-quit   Quit the shell.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "copy")
             {
-                Console.WriteLine("copy   Copies one or more files to another location.");
+                Console.WriteLine("-copy   Copies one or more files to another location.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "del")
             {
-                Console.WriteLine("del   Deletes one or more files.");
+                Console.WriteLine("-del   Deletes one or more files.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "md")
             {
-                Console.WriteLine("md   Creates a directory.");
+                Console.WriteLine("-md   Creates a directory.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "rd")
             {
-                Console.WriteLine("rd   Removes a directory.");
+                Console.WriteLine("-rd   Removes a directory.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "rename")
             {
-                Console.WriteLine("rename   Renames a file.");
+                Console.WriteLine("-rename   Renames a file.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "type")
             {
-                Console.WriteLine("type   Displays the contents of a text file.");
+                Console.WriteLine("-type   Displays the contents of a text file.");
             }
+
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "import")
             {
-                Console.WriteLine("import   import text file(s) from your computer.");
+                Console.WriteLine("-import   import text file(s) from your computer.");
             }
+
             else if (CommandArray2Arg[0].ToLower() == "help" && CommandArray2Arg[1].ToLower() == "export")
             {
-                Console.WriteLine("export   export text file(s) to your computer.");
+                Console.WriteLine("-export   export text file(s) to your computer.");
             }
 
             else if (CommandArray2Arg[0].ToLower() == "md")
             {
-                if (CommandArray2Arg[1].Contains(":"))
-                {  //  string dir = @"C:\test\Aaron";
-                    if (!Directory.Exists(CommandArray2Arg[1]))
-                    {
-                        Directory.CreateDirectory(CommandArray2Arg[1]);
-                    }
-                }
-                else if (!CommandArray2Arg[1].Contains(":"))
+                if (Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString()) == -1)
                 {
-                    isused = true;
-                    if (Program.Currentdirectory.Search(CommandArray2Arg[1]) == -1)
+                    DirectoryEntry d = new DirectoryEntry(CommandArray2Arg[1].ToCharArray(), 1, 0, 0);
+                    Program.CurrentDirectory.DirectoryTable.Add(d);
+                    Program.CurrentDirectory.Write_Directory();
+                    Program.CurrentDirectory.ReadDirectory();
+
+                    if (Program.CurrentDirectory.Parent != null)
                     {
-                        directoryEntry d = new directoryEntry(CommandArray2Arg[1].ToCharArray(), 0x10, 0, 0);
-                        Program.Currentdirectory.directoryTable.Add(d);
-                        Program.Currentdirectory.Write_directory();
-                        if (Program.Currentdirectory.Parent != null)
-                        {
-                            Program.Currentdirectory.Parent.UpdateContent(Program.Currentdirectory.GetdirectoryEntry());
-                            Program.Currentdirectory.Parent.Write_directory();
-                        }
-                        DateTime aDate2 = DateTime.Now;
-                        Date.Add(aDate2.ToString("MM / dd / yyyy  HH:mm  tt"));
-
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("A subdirectory or file " + CommandArray2Arg[1] + " is already exists.");
-                    }
-                }
-            }
-
-            else if (CommandArray2Arg[0] == "del")
-            {
-                if (CommandArray2Arg[1].Contains(":"))
-                {
-
-                }
-                else
-                {
-                    int index = Program.Currentdirectory.Search(CommandArray2Arg[1].ToString());
-                    if (index != -1)
-                    {
-                        if (Program.Currentdirectory.directoryTable[index].fileAttribute == 1)
-                        {
-                            int first = Program.Currentdirectory.directoryTable[index].firstCluster;
-                            int size = Program.Currentdirectory.directoryTable[index].fileSize;
-                            string content = "";
-                            FileEntryClass d1 = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 0x01, first, size, Program.Currentdirectory, content);
-                            d1.DeleteFile();
-
-                        }
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("The system cannot find the file specified.");
-                    }
-                }
-            }
-            else if (CommandArray2Arg[0].ToLower() == "rd") //remove directory
-            {
-                int index = Program.Currentdirectory.Search(CommandArray2Arg[1].ToString());
-                if (index != -1)
-                {
-                    int size = Program.Currentdirectory.directoryTable[index].fileSize;
-
-                    int FirstCluster = Program.Currentdirectory.directoryTable[index].firstCluster; //علشان اشوف الفولدر موجود ولا
-                    directory dir = new directory(CommandArray2Arg[1].ToCharArray(), 0x10, FirstCluster, size, Program.Currentdirectory);
-                    dir.Deletedirectory(CommandArray2Arg[1].ToString());
-                    Date.RemoveAt(index);
-                }
-                else
-                {
-                    Console.WriteLine("Folder not exist");
-                }
-            }
-            else if (CommandArray2Arg[0] == "import")
-            {
-                if (File.Exists(CommandArray2Arg[1]))
-                {
-                    string name_txt = Path.GetFileName(CommandArray2Arg[1]);
-                    string content_txt = File.ReadAllText(CommandArray2Arg[1]);
-                    int size_txt = content_txt.Length;
-                    int index = Program.Currentdirectory.Search(name_txt);
-                    if (index == -1)
-                    {
-                        if (size_txt > 0)
-                        {
-                            Program.Currentdirectory.firstCluster = FatTable.getAvailableBlock();
-                        }
-                        else { }
-                        FileEntryClass d = new FileEntryClass(name_txt.ToCharArray(), 0x01, 0, size_txt, Program.Currentdirectory, content_txt);
-                        d.WriteFileContent();
-                        directoryEntry d1 = new directoryEntry(name_txt.ToCharArray(), 0x01, 0, size_txt);
-                        Program.Currentdirectory.directoryTable.Add(d1);
-                        Program.Currentdirectory.Write_directory();
-                    }
-
-                }
-            }
-            else if (CommandArray2Arg[0].ToLower() == "cd") //change directory'
-            {
-                int index = Program.Currentdirectory.Search(CommandArray2Arg[1].ToString());//بسيرش علي الدايريكتوري الي انا عايز اروحله 
-
-                if (index != -1)
-                {
-                    byte attribute = Program.Currentdirectory.directoryTable[index].fileAttribute;
-                    if (attribute == 16)
-                    {
-                        int FirstCluster = Program.Currentdirectory.directoryTable[index].firstCluster; //علشان اشوف الفولدر موجود ولا
-                        directory dir = new directory(CommandArray2Arg[1].ToCharArray(), 1, FirstCluster, 0, Program.Currentdirectory);//بديلة معلومات الي الدايريكتوري الي عايز اروحله
-                        Program.Currentdirectory = dir;  //هنا خليته يشاور ع الدايريكتوري الي عايز اروحله
-                        Program.path = Program.path + "\\" + CommandArray2Arg[1].ToString();   //غيرت الباس
-                        Program.Currentdirectory.Readdirectory();
+                        Program.CurrentDirectory.Parent.UpdateContent(Program.CurrentDirectory.GetDirectoryEntry());
+                        Program.CurrentDirectory.Parent.Write_Directory();
+                        Program.CurrentDirectory.ReadDirectory();
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Specified folder is not exist.");
+                    Console.WriteLine("Folder Exist");
                 }
+
             }
-            else if (CommandArray2Arg[0].ToLower() == "type")
+
+            else if (CommandArray2Arg[0].ToLower() == "rd")
             {
-                int index = Program.Currentdirectory.Search(CommandArray2Arg[1].ToString());
+                int index = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
                 if (index != -1)
                 {
-
-                    int first = Program.Currentdirectory.directoryTable[index].firstCluster;
-                    int size = Program.Currentdirectory.directoryTable[index].fileSize;
-                    string content = "";
-                    string content_txt = File.ReadAllText("F:\\MM.txt");
-                    FileEntryClass d1 = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 0x01, first, size, Program.Currentdirectory, content);
-                    d1.ReadFileContent();
-                    Console.WriteLine(d1.FileContent);
-                    Console.WriteLine(content_txt);
-
+                    int FirstCluster = Program.CurrentDirectory.DirectoryTable[index].firstCluster;
+                    Directory d = new Directory(CommandArray2Arg[1].ToCharArray(), 1, FirstCluster, 0, Program.CurrentDirectory);
+                    d.DeleteDirectory(CommandArray2Arg[1].ToString());
+                    d.Write_Directory();
+                    d.ReadDirectory();
                 }
-
                 else
                 {
-                    Console.WriteLine("The system cannot find the file specified.");
+                    Console.WriteLine("Folder not Exist");
                 }
 
             }
-            else
-            {
-                Console.WriteLine(CommandArray2Arg[0] + " It's not a valid command.");
-                Console.WriteLine("Please use valid Command ^__^ ");
-            }
-        }
 
-        static void Command3Arg(string[] CommandArray3Arg)
-        {
-            if (CommandArray3Arg[0].ToLower() == "rename")
+            else if (CommandArray2Arg[0].ToLower() == "cd")
             {
-                int index = Program.Currentdirectory.Search(CommandArray3Arg[1].ToString());
-                int index2 = Program.Currentdirectory.Search(CommandArray3Arg[2].ToString());
+                string k = new string(VirtualDisk.Root.FileName);
+                string l = new string(CommandArray2Arg[1]);
+                var x = CommandArray2Arg[1].ToString().Length;
+                if (x < 11)
+                {
+                    for (int i = x; i < 11; i++)
+                    {
+                        l += " ";
 
+                    }
+                }
+                var temp = VirtualDisk.Root;
+                if (CommandArray2Arg[1].ToString() == "..")
+                {
+                    Program.CurrentDirectory = temp;
+                    string back = new string(Program.CurrentDirectory.FileName);
+                    Program.Path = back;
+                }
+                int index = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
                 if (index != -1)
                 {
-                    if (index2 == -1)
+                    byte Attribute = Program.CurrentDirectory.DirectoryTable[index].fileAttribute;
+                    if (Attribute == 1)
                     {
-                        directoryEntry d1 = Program.Currentdirectory.directoryTable[index];
-
-                        d1.FileName = CommandArray3Arg[2].ToCharArray();
-                        //  Program.current_Directory.Directory_Table.RemoveAt(index);
-
+                        int FirstCluster = Program.CurrentDirectory.DirectoryTable[index].firstCluster;
+                        Directory d = new Directory(CommandArray2Arg[1].ToLower().ToCharArray(), 1, FirstCluster, 0, Program.CurrentDirectory);
+                        Program.CurrentDirectory = d;
+                        Program.Path += "\\" + CommandArray2Arg[1].ToString();
+                        Program.CurrentDirectory.ReadDirectory();
                     }
                     else
                     {
-                        Console.WriteLine("A subdirectory or file " + CommandArray3Arg[2] + " is already exists.");
+                        Console.WriteLine("Specified Folder isn't exist , it's File.");
                     }
+                }
 
+
+            }
+
+            else if (CommandArray2Arg[0].ToLower() == "import") //بجيب فايل من الجهاز وبحطه فى الفيرتشوال ديسك
+            {
+                if (!File.Exists(CommandArray2Arg[1].ToString()))
+                {
+                    // Console.WriteLine(CommandArray2Arg[1].ToString());
+                    Console.WriteLine("The file is not Exist");
                 }
                 else
                 {
-
-                    Console.WriteLine("The system cannot find the file specified.");
-                }
-            }
-            else if (CommandArray3Arg[0] == "export")
-            {
-                int index = Program.Currentdirectory.Search(CommandArray3Arg[1].ToString());
-                if (index != -1)
-                {
-                    if (System.IO.Directory.Exists(CommandArray3Arg[2]))
+                    string fileName = "";
+                    string FileContent = "";
+                    int FileSizeN;
+                    int LastIndexofBack = (CommandArray2Arg[1].LastIndexOf("\\"));
+                    for (int i = LastIndexofBack + 1; i < CommandArray2Arg[1].Length; i++)
                     {
-                        int first = Program.Currentdirectory.directoryTable[index].firstCluster;
-                        int size = Program.Currentdirectory.directoryTable[index].fileSize;
-                        string content = "";
-                        FileEntryClass d1 = new FileEntryClass(CommandArray3Arg[1].ToCharArray(), 0x01, first, size, Program.Currentdirectory, content);
-                        d1.ReadFileContent();
-                        StreamWriter write = new StreamWriter(CommandArray3Arg[2] + "\\" + CommandArray3Arg[1]);
-                        write.Write(d1.FileContent);
-                        write.Flush();
-                        write.Close();
+                        fileName += CommandArray2Arg[1][i];
+                    }
+                    FileContent += File.ReadAllText(CommandArray2Arg[1].ToString());
+                    FileSizeN = FileContent.Length;
+                    int indexFile = Program.CurrentDirectory.Search(fileName);
+                    if (indexFile != -1)
+                    {
+                        Console.WriteLine("File Already Exist");
                     }
                     else
                     {
-                        Console.WriteLine("The system cannot find the file specified.");
-                    }
-                }
-
-                else
-                {
-                    Console.WriteLine("The system cannot find the file specified.");
-                }
-
-
-            }
-
-            else if (CommandArray3Arg[0] == "copy")
-            {
-                cd_copy(CommandArray3Arg[2]);
-                import_copy(CommandArray3Arg[1]);
-                int index = Program.Currentdirectory.Search(CommandArray3Arg[1].ToString());
-                if (index != -1)
-                {
-                    if (System.IO.Directory.Exists(CommandArray3Arg[2]))
-                    {
-                        if (Program.Currentdirectory.ToString() != CommandArray3Arg[2])
+                        if (FileSizeN > 0)
                         {
-                            char ask;
-                            Console.WriteLine("Do you want to overide (y/n)");
-                            ask = Convert.ToChar(Console.ReadLine());
-                            if (ask == 'y')
-                            {
-                                int first = Program.Currentdirectory.directoryTable[index].firstCluster;
-                                int size = Program.Currentdirectory.directoryTable[index].fileSize;
+                            int FirstCluster = FatTable.getAvailableBlock();
+                            FatTable.setNext(-1, FirstCluster);
+                            FileEntryClass f = new FileEntryClass(fileName.ToCharArray(), 2, FirstCluster, FileSizeN, Program.CurrentDirectory, FileContent);
+                            // Program.CurrentDirectory.DirectoryTable.Add(f);
+                            f.FileContent = FileContent;
+                            f.WriteFileContent();
+                            //Console.WriteLine(f.ReadFileContent());
+                            Directory d = new Directory(fileName.ToCharArray(), 2, FirstCluster, FileSizeN, Program.CurrentDirectory);
+                            d.fileSize = FileSizeN;
+                            d.firstCluster = FirstCluster;
+                            Program.CurrentDirectory.DirectoryTable.Add(d);
 
-                                directoryEntry d1 = new directoryEntry(CommandArray3Arg[1].ToCharArray(), 0x01, first, size);
-                                directory d = new directory();
-                                //المفروض هنا  اوصل لل و اضيف file جوا directory  directoy المعمول 
-                                Program.Currentdirectory.directoryTable.Add(d);
-                            }
+                            Program.CurrentDirectory.Write_Directory();
+                            Program.CurrentDirectory.ReadDirectory();
                         }
                         else
                         {
-                            Console.WriteLine("The system cannot find the file specified.");
+                            int FirstCluster = FatTable.getAvailableBlock();
+                            FatTable.setNext(-1, FirstCluster);
+                            FileEntryClass f = new FileEntryClass(fileName.ToCharArray(), 2, FirstCluster, FileSizeN, Program.CurrentDirectory, FileContent);
+                            f.WriteFileContent();
+                            DirectoryEntry d = new DirectoryEntry(fileName.ToCharArray(), 2, 0, FileSizeN);
+                            Program.CurrentDirectory.DirectoryTable.Add(d);
+                            Program.CurrentDirectory.Write_Directory();
+                            Program.CurrentDirectory.ReadDirectory();
                         }
                     }
-
-                    else
-                    {
-                        Console.WriteLine("The system cannot find the file specified.");
-                    }
-
                 }
 
             }
-            else
-            {
-                Console.WriteLine(CommandArray3Arg[0] + " It's not a valid command.");
-                Console.WriteLine("Please use valid Command ^__^ ");
-            }
-            void cd_copy(string name_of_Dir)
-            {
-                int index = Program.Currentdirectory.Search(name_of_Dir.ToString());//بسيرش علي الدايريكتوري الي انا عايز اروحله 
 
+            else if (CommandArray2Arg[0].ToLower() == "type")
+            {
+                int index = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
                 if (index != -1)
                 {
-                    byte attribute = Program.Currentdirectory.directoryTable[index].fileAttribute;
-                    if (attribute == 16)
-                    {
-                        int FirstCluster = Program.Currentdirectory.directoryTable[index].firstCluster; //علشان اشوف الفولدر موجود ولا
-                        directory dir = new directory(name_of_Dir.ToCharArray(), 1, FirstCluster, 0, Program.Currentdirectory);//بديلة معلومات الي الدايريكتوري الي عايز اروحله
-                        Program.Currentdirectory = dir;  //هنا خليته يشاور ع الدايريكتوري الي عايز اروحله
-                        Program.path = Program.path + "\\" + name_of_Dir.ToString();   //غيرت الباس
-                        Program.Currentdirectory.Readdirectory();
-                    }
+
+                    int first = Program.CurrentDirectory.DirectoryTable[index].firstCluster;
+                    int size = Program.CurrentDirectory.DirectoryTable[index].fileSize;
+                    string content = "";
+                    string content_txt = File.ReadAllText("E:\\moh.txt");
+                    FileEntryClass d1 = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 0x01, first, size, Program.CurrentDirectory, content);
+                    d1.ReadFileContent();
+                    Console.WriteLine(content_txt);
                 }
-
-            }
-
-            void import_copy(string path)
-            {
-                if (File.Exists(path))
+                else
                 {
-                    string name_txt = Path.GetFileName(path);
-                    string content_txt = File.ReadAllText(path);
-                    int size_txt = content_txt.Length;
-                    int index = Program.Currentdirectory.Search(name_txt);
-                    if (index == -1)
-                    {
-                        if (size_txt > 0)
-                        {
-                            Program.Currentdirectory.firstCluster = FatTable.getAvailableBlock();
-                        }
-                        else { }
-                        FileEntryClass d = new FileEntryClass(name_txt.ToCharArray(), 0x01, 0, size_txt, Program.Currentdirectory, content_txt);
-                        d.WriteFileContent();
-                        directoryEntry d1 = new directoryEntry(name_txt.ToCharArray(), 0x01, 0, size_txt);
-                        Program.Currentdirectory.directoryTable.Add(d1);
-                        Program.Currentdirectory.Write_directory();
-                    }
-
+                    Console.WriteLine("The system cannot find the file specified.");
                 }
             }
 
+            else if (CommandArray2Arg[0].ToLower() == "export")
+            {
+                int index = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
+                if (index == -1)
+                {
+                    Console.WriteLine("The File is not Exist");
+                }
+                else
+                {
+                    if (!System.IO.Directory.Exists(CommandArray2Arg[2].ToString()))
+                    {
+                        Console.WriteLine("The System Canot find the folder Destination in your computer");
+                    }
+                    else
+                    {
+                        if (Program.CurrentDirectory.DirectoryTable[index].fileAttribute == 2)
+                        {
+                            int FirstCluster = Program.CurrentDirectory.DirectoryTable[index].firstCluster;
+                            int fileSize = Program.CurrentDirectory.DirectoryTable[index].fileSize;
+                            string temp = "";
+                            FileEntryClass f = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 2, FirstCluster, fileSize, Program.CurrentDirectory, temp);
+                            f.WriteFileContent();
+                            f.ReadFileContent();
+                            StreamWriter StreamWriter = new StreamWriter(CommandArray2Arg[2].ToString() + "\\" + CommandArray2Arg[1].ToString());
+                            StreamWriter.Write(f.FileContent);
+                            StreamWriter.Flush();
+                            StreamWriter.Close();
+                        }
+                        else if (Program.CurrentDirectory.DirectoryTable[index].fileAttribute == 1)
+                        {
+                            int FirstCluster = Program.CurrentDirectory.DirectoryTable[index].firstCluster;
+                            int fileSize = Program.CurrentDirectory.DirectoryTable[index].fileSize;
+                            Directory f = new Directory(CommandArray2Arg[1].ToCharArray(), 1, FirstCluster, fileSize, Program.CurrentDirectory);
+                            f.Write_Directory();
+                            f.ReadDirectory();
+                            StreamWriter StreamWriter = new StreamWriter(CommandArray2Arg[2].ToString() + "\\" + CommandArray2Arg[1].ToString());
+                            StreamWriter.Write(f);
+                            StreamWriter.Flush();
+                            StreamWriter.Close();
+                        }
+                    }
+                }
+            }
+
+            else if (CommandArray2Arg[0].ToLower() == "rename")
+            {
+                int indexOld = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
+                if (indexOld == -1)
+                {
+                    Console.WriteLine("The File is not Exist");
+                }
+                else
+                {
+                    int indexNew = Program.CurrentDirectory.Search(CommandArray2Arg[2].ToString());
+                    if (indexNew != -1)
+                    {
+                        Console.WriteLine("can't Rename");
+                    }
+                    else
+                    {
+                        int firstClusterOld = Program.CurrentDirectory.DirectoryTable[indexOld].firstCluster;
+                        int FileSize = Program.CurrentDirectory.DirectoryTable[indexOld].fileSize;
+                        if (Program.CurrentDirectory.DirectoryTable[indexOld].fileAttribute == 2)
+                        {
+                            FileEntryClass f = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 2, firstClusterOld, FileSize, Program.CurrentDirectory, "");
+                            f.FileName = CommandArray2Arg[2].ToCharArray();
+                            f.WriteFileContent();
+                            f.ReadFileContent();
+                            Program.CurrentDirectory.Write_Directory();
+                        }
+                        else
+                        {
+                            DirectoryEntry d = new DirectoryEntry(CommandArray2Arg[2].ToCharArray(), 1, firstClusterOld, FileSize);
+                            Program.CurrentDirectory.DirectoryTable.RemoveAt(indexOld);
+                            Program.CurrentDirectory.DirectoryTable.Insert(indexOld, d);
+                            Program.CurrentDirectory.Write_Directory();
+                        }
+
+                    }
+                }
+            }
+
+            else if (CommandArray2Arg[0].ToLower() == "del") //// for only files
+            {
+                int index = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
+                if (index == -1)
+                {
+                    Console.WriteLine("The File is not Exist");
+                }
+                else
+                {
+                    if (Program.CurrentDirectory.DirectoryTable[index].fileAttribute == 1)
+                    {
+                        Console.WriteLine("this is a folder");
+                    }
+                    else
+                    {
+                        int f_cluster = Program.CurrentDirectory.DirectoryTable[index].firstCluster;
+                        int file_size = Program.CurrentDirectory.DirectoryTable[index].fileSize;
+                        FileEntryClass f = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 2, f_cluster, file_size, Program.CurrentDirectory, "");
+                        f.DeleteFile(CommandArray2Arg[1].ToString());
+                        Program.CurrentDirectory.Write_Directory();
+                        Program.CurrentDirectory.ReadDirectory();
+                    }
+                }
+            }
+
+            else if (CommandArray2Arg[0].ToLower() == "copy")//// for only files///!!!!!!!!!
+            {
+                int indexSource = Program.CurrentDirectory.Search(CommandArray2Arg[1].ToString());
+                if (indexSource == -1)  // السورس مش موجود
+                {
+                    Console.WriteLine("The File is not Exist");
+                }
+                else // لقى السورس
+                {
+                    string fileName = "";
+
+                    fileName = CommandArray2Arg[2].ToString();
+                    int destination_index = Program.CurrentDirectory.Search(fileName);
+                    if (destination_index != -1)
+                    {
+                        if (Program.CurrentDirectory.FileName == CommandArray2Arg[2].ToCharArray())
+                        {
+                            Console.WriteLine(" the main destination and the new one are the same.. please enter another destination");
+                        }
+                        else
+                        {
+                            int F_Cluster = Program.CurrentDirectory.DirectoryTable[destination_index].firstCluster;
+                            Directory d = new Directory(CommandArray2Arg[2].ToCharArray(), 2, F_Cluster, 0, Program.CurrentDirectory);
+
+                            int f_cluster = Program.CurrentDirectory.DirectoryTable[indexSource].firstCluster;
+                            int file_size = Program.CurrentDirectory.DirectoryTable[indexSource].fileSize;
+                            Program.CurrentDirectory = d;
+
+                            Program.Path += "\\" + CommandArray2Arg[2].ToString();
+                            FileEntryClass f = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 2, f_cluster, file_size, Program.CurrentDirectory, "");
+                            Program.CurrentDirectory.DirectoryTable.Add(f);
+                            Program.CurrentDirectory.Write_Directory();
+                            Program.CurrentDirectory.ReadDirectory();
+                        }
+                    }
+                    else
+                    {
+                        int F_Cluster = FatTable.getAvailableBlock();
+                        Directory d = new Directory(CommandArray2Arg[2].ToCharArray(), 2, F_Cluster, 0, Program.CurrentDirectory);
+                        Program.CurrentDirectory.DirectoryTable.Add(d);
+
+                        int f_cluster = Program.CurrentDirectory.DirectoryTable[indexSource].firstCluster;
+                        int file_size = Program.CurrentDirectory.DirectoryTable[indexSource].fileSize;
+                        Program.CurrentDirectory = d;
+
+                        Program.Path += "\\" + CommandArray2Arg[2].ToString();
+                        FileEntryClass f = new FileEntryClass(CommandArray2Arg[1].ToCharArray(), 2, f_cluster, file_size, Program.CurrentDirectory, "");
+                        Program.CurrentDirectory.DirectoryTable.Add(f);
+                        Program.CurrentDirectory.Write_Directory();
+                        Program.CurrentDirectory.ReadDirectory();
+
+                    }
+                }
+            }
+
+            else
+            {
+                Console.WriteLine(CommandArray2Arg[0] + " is not a valid command.");
+                Console.WriteLine("please valid Command ");
+            }
+
+            }
         }
     }
-}
+

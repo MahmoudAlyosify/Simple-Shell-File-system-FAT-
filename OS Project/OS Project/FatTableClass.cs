@@ -12,19 +12,20 @@ namespace OS_Project
        static FatTable()
         {
             arr = new int[1024];
-            arr[0] = -1;  //superblock
-            arr[1] = 2;   // data fat table
+            arr[0] = -1; 
+            arr[1] = 2;  
             arr[2] = 3;
             arr[3] = 4;
             arr[4] = -1;
+
             for (int i = 5; i < 1024; i++)
             {
                 arr[i] = 0;
             }
         }
+  
 
         public static void WriteFatTable()
-
         {
             using (FileStream file = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
@@ -37,7 +38,6 @@ namespace OS_Project
         }
         public static int[] GetFatTable()
         {
-           
             using (FileStream file = new FileStream(FileName, FileMode.Open, FileAccess.ReadWrite))
             {
                 file.Seek(1024, SeekOrigin.Begin);
@@ -97,6 +97,7 @@ namespace OS_Project
             {
                 for (int i = 0; i < GetFatTable().Length; i++)
                 {
+
                     if (Index != NotBlocks[0] && Index != NotBlocks[1] && Index != NotBlocks[2] && Index != NotBlocks[3] && Index != NotBlocks[4])
                     {
                         if (i == Index)
@@ -107,28 +108,17 @@ namespace OS_Project
                         }
                     }
                     else
-                    { 
+                    {
+
                         break;
                     }
                 }
             }
         }
-
-       static public void PrintFatTable()
+        static public int FreeSpaces()
         {
-            for (int i = 0; i < GetFatTable().Length; i++)
-            {
-                Console.Write(GetFatTable()[i]);
-            }
-            Console.WriteLine();
+            int free = FatTable.getAvailableBlocks() * 1024;
+            return free;
         }
-        static public int get_free_spaces()
-        {
-            int co = getAvailableBlocks()*1024;
-
-            return co;
-        }
-
     }
-
 }

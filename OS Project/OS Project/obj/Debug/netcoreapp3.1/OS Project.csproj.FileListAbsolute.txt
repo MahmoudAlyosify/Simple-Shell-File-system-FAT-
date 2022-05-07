@@ -24,31 +24,17 @@ C:\Users\Electronica\Desktop\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Pr
 C:\Users\Electronica\Desktop\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.dll
 C:\Users\Electronica\Desktop\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.pdb
 C:\Users\Electronica\Desktop\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.genruntimeconfig.cache
-E:\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.exe
-E:\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.deps.json
-E:\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.runtimeconfig.json
-E:\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.runtimeconfig.dev.json
-E:\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.dll
-E:\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.pdb
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.csproj.AssemblyReference.cache
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.GeneratedMSBuildEditorConfig.editorconfig
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.AssemblyInfoInputs.cache
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.AssemblyInfo.cs
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.csproj.CoreCompileInputs.cache
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.dll
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.pdb
-E:\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.genruntimeconfig.cache
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.csproj.AssemblyReference.cache
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.GeneratedMSBuildEditorConfig.editorconfig
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.AssemblyInfoInputs.cache
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.AssemblyInfo.cs
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.csproj.CoreCompileInputs.cache
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.dll
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.pdb
-E:\OS Project\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.exe
-E:\OS Project\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.deps.json
-E:\OS Project\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.runtimeconfig.json
-E:\OS Project\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.runtimeconfig.dev.json
-E:\OS Project\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.dll
-E:\OS Project\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.pdb
-E:\OS Project\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.genruntimeconfig.cache
+D:\Lastone 5-7-2022\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.exe
+D:\Lastone 5-7-2022\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.deps.json
+D:\Lastone 5-7-2022\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.runtimeconfig.json
+D:\Lastone 5-7-2022\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.runtimeconfig.dev.json
+D:\Lastone 5-7-2022\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.dll
+D:\Lastone 5-7-2022\OS Project\OS Project\bin\Debug\netcoreapp3.1\OS Project.pdb
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.csproj.AssemblyReference.cache
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.GeneratedMSBuildEditorConfig.editorconfig
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.AssemblyInfoInputs.cache
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.AssemblyInfo.cs
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.csproj.CoreCompileInputs.cache
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.dll
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.pdb
+D:\Lastone 5-7-2022\OS Project\OS Project\obj\Debug\netcoreapp3.1\OS Project.genruntimeconfig.cache

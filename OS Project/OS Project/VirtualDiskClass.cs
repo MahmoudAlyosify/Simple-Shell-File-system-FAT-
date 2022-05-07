@@ -6,17 +6,15 @@ using System.Text;
 
 namespace OS_Project
 {
-
     public static class VirtualDisk
     {
-        static public directory Root;
 
         static public string FileName = "Os.txt";
-        static byte[] super = Encoding.ASCII.GetBytes("0");
-        static byte[] bytes = Encoding.ASCII.GetBytes("#");
-        static byte[] Data = Encoding.ASCII.GetBytes("*");
-        static int position = 0;
-
+        public static byte[] super = Encoding.ASCII.GetBytes("0");
+        public static byte[] bytes = Encoding.ASCII.GetBytes("#");
+        public static byte[] Data = Encoding.ASCII.GetBytes("*");
+        public static int position = 0;
+        public static Directory Root;
         public static void Intialize()
         {
             if (!File.Exists(FileName))
@@ -50,17 +48,17 @@ namespace OS_Project
                     }
                     file.Close();
                 }
-                Root = new directory("M:\\Users\\Mahmoud".ToCharArray(), 1, 6,0, null);
-                Root.Write_directory();
+                Root = new Directory("M:\\Users\\Operating System".ToCharArray(), 1, 6,0, null);
+                Root.Write_Directory();
                 FatTable.WriteFatTable();
-
             }
             else
             {
                 int[] Fat_Table = FatTable.GetFatTable();
-                Root = new directory("M:\\Users\\Mahmoud".ToCharArray(), 1, 5,0, null);
-                Root.Write_directory();
-                Root.Readdirectory();
+                Root = new Directory("M:\\Users\\Operating System".ToCharArray(), 1, 5,0, null);
+                Root.Write_Directory();
+                FatTable.WriteFatTable();
+                Root.ReadDirectory();
             }
         }
 
@@ -74,20 +72,7 @@ namespace OS_Project
                 file.Close();
             }
         }
-        static public void Write_Cluster(int Cluster_index, byte[] bytes)
-        {
-            using (FileStream writer = File.OpenWrite((FileName)))
-            {
-                writer.Seek(Cluster_index * 1024, SeekOrigin.Begin);
-                foreach (char ln in bytes)
-                {
-                    writer.WriteByte((byte)ln);
 
-                }
-                writer.Flush();
-            }
-
-        }
         static public byte[] GetBlock(int index)
         {
             string FileName = "OS.txt";
@@ -97,13 +82,6 @@ namespace OS_Project
             file.Read(TheReturnData, 0, TheReturnData.Length);
             file.Close();
             return TheReturnData;
-        }
-        static public void printBlock(int index)
-        {
-            for (int i = 0; i < 1024; i++)
-            {
-                Console.Write((char)GetBlock(index)[i]);
-            }
         }
     }
 }
